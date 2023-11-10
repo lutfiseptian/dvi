@@ -24,39 +24,53 @@ class ButtonApp {
     );
   }
 
-  static Widget btnqris({bg, text, textColor, onTap, width, imageAssetPath}) {
+  static Widget btnqris({
+    bg,
+    text,
+    textColor,
+    onTap,
+    width,
+    imageAssetPath,
+  }) {
     return InkWell(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: bg ?? ColorsApp.border,
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: ColorsApp.border, // Warna garis luar
+            width: 2.0, // Lebar garis luar
+          ),
         ),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-              Image.asset(
-                'assets/images/image_qris.png', // Ganti dengan path gambar Anda
-                width: 70, // Sesuaikan ukuran gambar sesuai kebutuhan
-                height: 70,
-                color: textColor ?? Colors.blue,
+        child: Padding(
+          padding: EdgeInsets.all(5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    'assets/images/image_qris.png', // Ganti dengan path gambar Anda
+                    width: 100, // Sesuaikan ukuran gambar sesuai kebutuhan
+                    height: 70,
+                    color: textColor ?? Colors.blue,
+                  ),
+                ),
               ),
-                SizedBox(width: 20),
-          TextApp.label(
-            text: text,
-            color: textColor ?? Colors.blue,
-            size: 14.0,
-          ),// Jarak antara gambar dan teks
-              ],
-            ),
+              SizedBox(height: 1),
+              TextApp.label(
+                text: text,
+                color: textColor ?? Colors.blue,
+                size: 14.0,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
+
 
 
   static Widget buttonNotifikasi(

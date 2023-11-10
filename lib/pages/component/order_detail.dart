@@ -186,7 +186,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       Row(
                         children: <Widget>[
                           ButtonApp.btnqris(
-                            text: "Kektuk Untuk Pembayaran QRIS",
+                            text: "Ketuk Untuk Pembayaran QRIS",
                             onTap: () {
                               if (AppData.token == "") {
                                 print(AppData.token.toString());
