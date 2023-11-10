@@ -14,6 +14,8 @@ import 'package:digital_voucher_indonesia/model/voucher.dart';
 import 'package:digital_voucher_indonesia/model/va.dart';
 import 'package:digital_voucher_indonesia/model/transaction.dart';
 
+import '../pages/component/qris_order.dart';
+
 class ProductController extends GetxController {
   var productsPopuler = <ProductModel>[].obs;
   var bestVouccher = <ProductModel>[].obs;
@@ -23,6 +25,7 @@ class ProductController extends GetxController {
   var bank = <VaModel>[].obs;
   var transaction = TransactionModel().obs;
   var notes = [].obs;
+  var qr = ''.obs;
 
   var isLoadingProductPopuler = true.obs;
   var isLoadingBestVoucher = true.obs;
@@ -200,29 +203,62 @@ class ProductController extends GetxController {
     }
   }
 
-  // Future<void> ferchDetail({productCodee, type}) async {
-  //   try {
-  //     var url;
-  //     if (type == "pulsa") {
-  //       url = "/product/list/pulsa/detail?product_code${productCodee}";
-  //     } else {
-  //       url = "/product/list/games/detail?product_code=${productCodee}";
-  //     }
-  //     isLoadingDetail.value = true;
-  //     var response = await ApiRequest(url: url).get();
-  //     var res = jsonDecode(response.body);
-  //     if (response.statusCode == 200) {
-  //       details.value = ProductModel.fromJsonToList(res['data']);
-  //       isLoadingDetail.value = false;
-  //       return;
-  //     }
-  //     // AlertApp.showToast(res['meta']['message']);
-  //     isLoadingDetail.value = false;
-  //   } catch (e) {
-  //     isLoadingDetail.value = false;
-  //     AlertApp.showToast(e.toString());
-  //   }
-  // }
+  Future<void> QrisTransaction() async {
+    try {
+      var list = [];
+      var amount = cartProduct
+          .fold<int>(
+          0,
+              (previousValue, element) =>
+          int.parse(previousValue.toString()) +
+              int.parse((int.parse(element.qty.toString()) *
+                  int.parse(element.price.toString()))
+                  .toString()))
+          .toString();
+
+      cartProduct.forEach((element) {
+        var d = {"code": element.code, "dest_topup": element.destTopup};
+        list.add(d);
+      });
+      var body = {
+        "bank": 'qris',
+        "amount": amount.toString(),
+        'token': AppData.token,
+        "order": list,
+      };
+      print("panjang ${cartProduct.length}");
+      print("datta list ${list.toString()}");
+      AlertApp.showLoadingIndicator(Get.context!, "Proses transaksi...");
+      var response =
+      await ApiRequest(url: '/transactions/qris', body: body).postTransaksi();
+      var res = jsonDecode(response.body);
+      print(res);
+      if (response.statusCode == 200) {
+        cartProduct.clear();
+        AppData.products = [];
+        Get.back();
+        transaction.value = TransactionModel.fromJson(res['data']);
+        qr.value = transaction.value.notes.toString() as String;
+        print("Data Qr $qr");
+        Get.back();
+        Get.back();
+        Navigator.push(
+          Get.context!,
+          MaterialPageRoute(
+              builder: (context) => MobileTemplate(
+                page: QrisPage(),
+              )),
+        );
+
+        return;
+      }
+      Get.back();
+      AlertApp.showToast(res['meta']['message']);
+    } catch (e) {
+      AlertApp.showToast(e.toString());
+    }
+  }
+
 
   Future<void> fetchDetail({productCode, type}) async {
     try {

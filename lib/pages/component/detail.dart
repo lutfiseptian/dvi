@@ -96,7 +96,8 @@ class _DetailPageState extends State<DetailPage> {
               child: Container(
                 height: double.maxFinite,
                 child: SingleChildScrollView(
-                  child: Column(
+                  child:
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -113,6 +114,31 @@ class _DetailPageState extends State<DetailPage> {
                       SizedBox(
                         height: 16,
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(left: padding, right: padding),
+                        child: Center(
+                          child: Image.network(
+                            widget.product.images, // Ganti dengan URL gambar Anda
+                            fit: BoxFit.fill,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                    : null,
+                              );
+                            },
+                            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                              return Text('Error loading image');
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
                       SizedBox(
                         width: 10,
                       ),
@@ -121,45 +147,11 @@ class _DetailPageState extends State<DetailPage> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                                flex: 40,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(
-                                    widget.product
-                                        .images, // Replace with your image URL
-                                    fit: BoxFit.fill,
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      }
-                                      return CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      );
-                                    },
-                                    errorBuilder: (BuildContext context,
-                                        Object error, StackTrace? stackTrace) {
-                                      return Text('Error loading image');
-                                    },
-                                    // child: Image.network(
-                                    //   widget.product.images,
-                                    //   fit: BoxFit.fill,
-                                  ),
-                                )),
                             SizedBox(
                               width: 8,
                             ),
                             Expanded(
-                              flex: 60,
+                              flex: 100,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -240,13 +232,6 @@ class _DetailPageState extends State<DetailPage> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Expanded(
-                                                    flex: 40,
-                                                    child: TextApp.label(
-                                                        text: "Points",
-                                                        size: 14.0,
-                                                        weigh: FontWeight.bold),
-                                                  ),
-                                                  Expanded(
                                                     flex: 60,
                                                     child: Column(
                                                       children: [
@@ -265,7 +250,7 @@ class _DetailPageState extends State<DetailPage> {
                                                                       .isEmpty
                                                                   ? TextApp.label(
                                                                       text:
-                                                                          "Choose an option",
+                                                                          "Klik untuk pilih harga",
                                                                       color: ColorsApp
                                                                           .Secondary)
                                                                   : TextApp.label(
@@ -579,232 +564,6 @@ class _DetailPageState extends State<DetailPage> {
                       SizedBox(
                         height: 16,
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: padding, right: padding),
-                      //   child: TextApp.label(
-                      //       text: "Related Products",
-                      //       size: 24.0,
-                      //       weigh: FontWeight.bold),
-                      // ),
-                      // SizedBox(
-                      //   height: 12,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: padding, right: padding),
-                      //   child: Wrap(
-                      //     direction: Axis
-                      //         .horizontal, // This is the default, just for clarity
-                      //     alignment: WrapAlignment
-                      //         .start, // This is the default, just for clarity
-                      //     spacing: 8.0,
-                      //     runSpacing: 8.0,
-                      //     children: List.generate(
-                      //         (widget.type == "voucher"
-                      //                 ? productController.bestVouccher.length
-                      //                 : widget.type == "pulsa"
-                      //                     ? productController.pulsa.length
-                      //                     : productController.games.length)
-                      //             .ceil(), // Number of rows in the wrap
-                      //         (index) {
-                      //       var data = widget.type == 'voucher'
-                      //           ? productController.bestVouccher[index]
-                      //           : widget.type == "pulsa"
-                      //               ? productController.pulsa[index]
-                      //               : productController.games[index];
-                      //
-                      //       return InkWell(
-                      //         onTap: () {
-                      //           Navigator.push(
-                      //             Get.context!,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => MobileTemplate(
-                      //                       page: DetailPage(
-                      //                         type: widget.type,
-                      //                         product: data,
-                      //                       ),
-                      //                     )),
-                      //           );
-                      //           // Get.to(MobileTemplate(
-                      //           //   page: DetailPage(
-                      //           //     type: widget.type,
-                      //           //     product: data,
-                      //           //   ),
-                      //           // ));
-                      //         },
-                      //         child: Padding(
-                      //           padding: EdgeInsets.only(bottom: 16),
-                      //           child: Container(
-                      //             width: MediaQuery.of(context).size.width /
-                      //                     (width <= 515
-                      //                         ? 2
-                      //                         : width >= 515 && width < 1012
-                      //                             ? 3
-                      //                             : width >= 1012 &&
-                      //                                     width <= 1040
-                      //                                 ? 4
-                      //                                 : 5) -
-                      //                 40,
-                      //             child: Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.start,
-                      //               mainAxisAlignment: MainAxisAlignment.start,
-                      //               children: [
-                      //                 ClipRRect(
-                      //                   borderRadius: BorderRadius.circular(12),
-                      //                   // child: Image.network(data.images)
-                      //                   child: Image.network(
-                      //                     data.images, // Replace with your image URL
-                      //                     fit: BoxFit.fill,
-                      //                     loadingBuilder: (BuildContext context,
-                      //                         Widget child,
-                      //                         ImageChunkEvent?
-                      //                             loadingProgress) {
-                      //                       if (loadingProgress == null) {
-                      //                         return child;
-                      //                       }
-                      //                       return CircularProgressIndicator(
-                      //                         value: loadingProgress
-                      //                                     .expectedTotalBytes !=
-                      //                                 null
-                      //                             ? loadingProgress
-                      //                                     .cumulativeBytesLoaded /
-                      //                                 loadingProgress
-                      //                                     .expectedTotalBytes!
-                      //                             : null,
-                      //                       );
-                      //                     },
-                      //                     errorBuilder: (BuildContext context,
-                      //                         Object error,
-                      //                         StackTrace? stackTrace) {
-                      //                       return Text('Error loading image');
-                      //                     },
-                      //                     // child: Image.network(
-                      //                     //   widget.product.images,
-                      //                     //   fit: BoxFit.fill,
-                      //                   ),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: 8,
-                      //                 ),
-                      //                 TextApp.label(text: data.name),
-                      //                 SizedBox(
-                      //                   height: 8,
-                      //                 ),
-                      //                 widget.type == "voucher"
-                      //                     ? Row(
-                      //                         children: [
-                      //                           TextApp.label(
-                      //                               decoration: TextDecoration
-                      //                                   .lineThrough,
-                      //                               text: Helper.rupiahFormat(
-                      //                                   data.normalPrice),
-                      //                               color: ColorsApp.red),
-                      //                           SizedBox(
-                      //                             width: 8,
-                      //                           ),
-                      //                           TextApp.label(
-                      //                               text: Helper.rupiahFormat(
-                      //                                   data.normalPrice),
-                      //                               color: ColorsApp.green)
-                      //                         ],
-                      //                       )
-                      //                     : widget.type == "game"
-                      //                         ? TextApp.label(
-                      //                             text: data.rangeHarga
-                      //                                 .toString(),
-                      //                             color: ColorsApp.green)
-                      //                         : TextApp.label(
-                      //                             text: data.rangeHarga,
-                      //                             color: ColorsApp.green),
-                      //                 // Row(
-                      //                 //   children: [
-                      //                 //     TextApp.label(
-                      //                 //         text: "Rp.1750.00 - Rp.150.00",
-                      //                 //         color: ColorsApp.green),
-                      //                 //   ],
-                      //                 // ),
-                      //                 SizedBox(
-                      //                   height: 16.0,
-                      //                 ),
-                      //                 InkWell(
-                      //                   onTap: () {
-                      //                     Get.to(MobileTemplate(
-                      //                       page: DetailPage(
-                      //                         type: widget.type,
-                      //                         product: data,
-                      //                       ),
-                      //                     ));
-                      //                   },
-                      //                   child: Container(
-                      //                     padding: EdgeInsets.all(10),
-                      //                     decoration: BoxDecoration(
-                      //                         color: ColorsApp.grey,
-                      //                         borderRadius:
-                      //                             BorderRadius.circular(10)),
-                      //                     child: TextApp.label(
-                      //                         text: "Top Up",
-                      //                         color: ColorsApp.blackGrey),
-                      //                   ),
-                      //                 )
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }),
-                      //   ),
-                      // ),
-                      // Wrap(
-                      //   direction: Axis
-                      //       .horizontal, // This is the default, just for clarity
-                      //   alignment: WrapAlignment
-                      //       .start, // This is the default, just for clarity
-                      //   spacing: 8.0,
-                      //   runSpacing: 8.0,
-                      //   children: List.generate(
-                      //     (voucherController.vouchers.length)
-                      //         .ceil(), // Number of rows in the wrap
-                      //     (index) => Container(
-                      //       width: MediaQuery.of(context).size.width / 2 - 24,
-                      //       child: Column(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         mainAxisAlignment: MainAxisAlignment.start,
-                      //         children: [
-                      //           ClipRRect(
-                      //               borderRadius: BorderRadius.circular(12),
-                      //               child:
-                      //                   Image.asset('assets/images/cod.png')),
-                      //           SizedBox(
-                      //             height: 8,
-                      //           ),
-                      //           TextApp.label(text: "Call of Duty Mobile"),
-                      //           SizedBox(
-                      //             height: 8,
-                      //           ),
-                      //           Row(
-                      //             children: [
-                      //               TextApp.label(
-                      //                   text: "Rp.1750.00 - Rp.150.00",
-                      //                   color: ColorsApp.green),
-                      //             ],
-                      //           ),
-                      //           SizedBox(
-                      //             height: 16.0,
-                      //           ),
-                      //           Container(
-                      //             padding: EdgeInsets.all(10),
-                      //             decoration: BoxDecoration(
-                      //                 color: ColorsApp.grey,
-                      //                 borderRadius: BorderRadius.circular(10)),
-                      //             child: TextApp.label(
-                      //                 text: "Top Up",
-                      //                 color: ColorsApp.blackGrey),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Footer()
                     ],
                   ),

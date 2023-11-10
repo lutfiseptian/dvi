@@ -30,6 +30,7 @@ class ProductModel {
   var product;
   var harga;
   var nominal;
+  var notes;
   var isSelected;
 
   var qty;
@@ -37,6 +38,7 @@ class ProductModel {
       {this.id,
       this.name,
       this.code,
+      this.notes,
       this.price,
       this.images,
       this.popular,
@@ -59,6 +61,7 @@ class ProductModel {
       id: json["id"],
       name: json["name"],
       code: json["code"],
+      notes: json["notes"],
       price: json["price"],
       images: json["images"],
       popular: json["popular"],
@@ -99,6 +102,7 @@ class ProductModel {
       "code": code,
       "price": price,
       "images": images,
+      "notes": notes,
       "popular": popular,
       "product_code": productCode,
       "range_harga": rangeHarga,

@@ -24,6 +24,41 @@ class ButtonApp {
     );
   }
 
+  static Widget btnqris({bg, text, textColor, onTap, width, imageAssetPath}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: bg ?? ColorsApp.border,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+              Image.asset(
+                'assets/images/image_qris.png', // Ganti dengan path gambar Anda
+                width: 70, // Sesuaikan ukuran gambar sesuai kebutuhan
+                height: 70,
+                color: textColor ?? Colors.blue,
+              ),
+                SizedBox(width: 20),
+          TextApp.label(
+            text: text,
+            color: textColor ?? Colors.blue,
+            size: 14.0,
+          ),// Jarak antara gambar dan teks
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   static Widget buttonNotifikasi(
       {bg, text, textColor, onTap, width, textNotif}) {
     return InkWell(

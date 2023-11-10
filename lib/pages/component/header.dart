@@ -74,7 +74,11 @@ class Header extends StatelessWidget {
                       //   MaterialPageRoute(builder: (context) => Dashboard()),
                       // );
                     },
-                    child: Image.asset(ImagesApp.logo)),
+                    child: Image.asset(
+                      ImagesApp.logo,
+                      width: 100.0, // Ganti dengan lebar yang diinginkan
+                      height: 100.0, // Ganti dengan tinggi yang diinginkan
+                    )),
               ),
             ),
           ),
