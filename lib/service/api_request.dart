@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:digital_voucher_indonesia/service/app_data.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ApiRequest {
@@ -21,7 +20,7 @@ class ApiRequest {
     // "Authorization": AppData.token
   };
 
-  var baseUrl = "http://222.165.240.203:7075/api/v1/biller5/dev";
+  var baseUrl = 'http://222.165.240.203:7075/api/v1/biller5/dev';
 
   ApiRequest({required this.url, this.body, this.temParams});
 
