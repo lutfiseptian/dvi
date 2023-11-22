@@ -20,7 +20,11 @@ class ApiRequest {
     // "Authorization": AppData.token
   };
 
-  var baseUrl = 'http://222.165.240.203:7075/api/v1/biller5/dev';
+  //api web
+  var baseUrl = 'https://kase.dhasatra.com/api/v1/dvi/dev';
+
+  //api app
+  // var baseUrl = 'http://kase.dhasatra.com:7078/api/v1/dvi/dev';
 
   ApiRequest({required this.url, this.body, this.temParams});
 

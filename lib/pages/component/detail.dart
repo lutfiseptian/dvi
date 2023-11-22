@@ -15,6 +15,7 @@ import 'package:digital_voucher_indonesia/pages/widget/text_filed.dart';
 import 'package:digital_voucher_indonesia/service/app_data.dart';
 import 'package:digital_voucher_indonesia/service/helper.dart';
 import 'package:flutter/material.dart';
+
 // import 'package:iconsax/iconsax.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ import 'package:get/get.dart';
 class DetailPage extends StatefulWidget {
   ProductModel product;
   var type;
+
   DetailPage({super.key, required this.product, this.type});
 
   @override
@@ -32,6 +34,7 @@ class _DetailPageState extends State<DetailPage> {
   var voucherController = Get.put(VoucherController());
   var productController = Get.put(ProductController());
   var appControllr = Get.put(AppController());
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,8 +42,6 @@ class _DetailPageState extends State<DetailPage> {
     appControllr.setInActiveNav();
     productController.qty.value = 1;
     productController.destUp.clear();
-    // productController.ferchDetail(
-    //     productCodee: widget.product.productCode.toString(), type: widget.type);
     productController.fetchDetail(
         productCode: widget.product.productCode.toString(), type: widget.type);
   }
@@ -50,6 +51,8 @@ class _DetailPageState extends State<DetailPage> {
     if (widget.type == null) {
       productController.games.clear();
       productController.pulsa.clear();
+      ProductController().details.clear();
+      productController.bestVouccher.clear();
     }
   }
 
@@ -80,7 +83,8 @@ class _DetailPageState extends State<DetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextApp.label(
-                      text: "Yuuuk ..... Top Up melalui Digital Voucher Indonesia !",
+                      text:
+                          "Yuuuk ..... Top Up melalui Digital Voucher Indonesia !",
                       weigh: FontWeight.w300,
                       size: 16.0,
                       color: Colors.white),
@@ -96,8 +100,7 @@ class _DetailPageState extends State<DetailPage> {
               child: Container(
                 height: double.maxFinite,
                 child: SingleChildScrollView(
-                  child:
-                  Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -118,19 +121,24 @@ class _DetailPageState extends State<DetailPage> {
                         padding: EdgeInsets.only(left: padding, right: padding),
                         child: Center(
                           child: Image.network(
-                            widget.product.images, // Ganti dengan URL gambar Anda
+                            widget.product.images,
+                            // Ganti dengan URL gambar Anda
                             fit: BoxFit.fill,
-                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
                               if (loadingProgress == null) {
                                 return child;
                               }
                               return CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               );
                             },
-                            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                            errorBuilder: (BuildContext context, Object error,
+                                StackTrace? stackTrace) {
                               return Text('Error loading image');
                             },
                           ),
@@ -161,6 +169,7 @@ class _DetailPageState extends State<DetailPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       widget.type == "voucher"
+
                                           ? Row(
                                               children: [
                                                 TextApp.label(
@@ -287,28 +296,32 @@ class _DetailPageState extends State<DetailPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Container(
-                                                  width: 120,
-                                                  decoration: BoxDecoration(
+                                                if (widget.type !=
+                                                    "pulsa") // Tambahkan kondisi ini
+                                                  Container(
+                                                    width: 120,
+                                                    decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
                                                       border: Border.all(
                                                           width: 1,
                                                           color: ColorsApp
-                                                              .Secondary)),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
+                                                              .Secondary),
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
                                                         top: 2,
                                                         bottom: 2,
                                                         left: 1,
-                                                        right: 1),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        InkWell(
+                                                        right: 1,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          InkWell(
                                                             onTap: () {
                                                               if (productController
                                                                       .qty
@@ -327,15 +340,16 @@ class _DetailPageState extends State<DetailPage> {
                                                                       1;
                                                             },
                                                             child: Icon(
-                                                              MdiIcons.minus,
-                                                            )),
-                                                        Obx(
-                                                          () => TextApp.label(
+                                                                MdiIcons.minus),
+                                                          ),
+                                                          Obx(
+                                                            () => TextApp.label(
                                                               text: productController
                                                                   .qty.value
-                                                                  .toString()),
-                                                        ),
-                                                        InkWell(
+                                                                  .toString(),
+                                                            ),
+                                                          ),
+                                                          InkWell(
                                                             onTap: () {
                                                               productController
                                                                       .qty
@@ -345,42 +359,38 @@ class _DetailPageState extends State<DetailPage> {
                                                                           .value +
                                                                       1;
                                                             },
-                                                            child: Icon(
-                                                              Icons.add,
-                                                            )),
-                                                      ],
+                                                            child:
+                                                                Icon(Icons.add),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 60,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 120,
+                                                  child: ButtonApp.btn(
+                                                    onTap: () {
+                                                      addtoCart();
+                                                    },
+                                                    text:
+                                                        "Add to Card",
                                                   ),
                                                 ),
                                               ],
                                             ),
                                           ),
-
-                                          Expanded(
-                                              flex: 60,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      width: 120,
-                                                      child: ButtonApp.btn(
-                                                          onTap: () {
-                                                            addtoCart();
-                                                          },
-                                                          text: "Add to cart")),
-                                                ],
-                                              )),
-
-                                          // Row(
-                                          //   children: [
-                                          //     Expanded(
-                                          //       child: TextApp.label(text: "Description"),
-                                          //     )
-                                          //   ],
-                                          // )
                                         ],
                                       ),
+
                                       SizedBox(
                                         height: 4,
                                       ),
@@ -508,9 +518,9 @@ class _DetailPageState extends State<DetailPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  TextApp.label(
-                                                      text: "Description",
-                                                      size: 14.0),
+                                                  // TextApp.label(
+                                                  //     text: "Description",
+                                                  //     size: 14.0),
                                                   SizedBox(
                                                     height: 4,
                                                   ),
@@ -525,16 +535,16 @@ class _DetailPageState extends State<DetailPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  TextApp.label(
-                                                      text:
-                                                          "Additional Information",
-                                                      size: 14.0),
+                                                  // TextApp.label(
+                                                  //     text:
+                                                  //         "Additional Information",
+                                                  //     size: 14.0),
                                                   SizedBox(
                                                     height: 4,
                                                   ),
                                                   TextApp.label(
                                                       text: widget
-                                                          .product.description
+                                                          .product.addional1
                                                           .toString(),
                                                       weigh: FontWeight.w400)
                                                 ],
@@ -740,7 +750,6 @@ class ListAlertDialog extends StatelessWidget {
   ListAlertDialog({required this.itemList});
 
   var controller = Get.put(ProductController());
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -752,13 +761,13 @@ class ListAlertDialog extends StatelessWidget {
           itemCount: itemList.length,
           itemBuilder: (BuildContext context, int index) {
             var data = itemList[index];
+            print(itemList.length);
             return ListTile(
               title: InkWell(
                 onTap: () {
                   controller.details.forEach((element) {
                     element.isSelected = false;
                   });
-
                   data.isSelected = true;
                   controller.details.refresh();
                   Get.back();

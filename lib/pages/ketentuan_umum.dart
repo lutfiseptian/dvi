@@ -520,7 +520,101 @@ Widget buildContentForId(String id) {
         ],
       ),
     );
-  } else if (id == "refund") {
+  }
+  else if (id == "privacy_policy") {
+    var controller = Get.put(VoucherController());
+    return Container(
+      padding: EdgeInsets.all(16),
+      color: Colors.blue[100],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Privacy Policy",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 5,),
+          Text(
+            "Terima kasih telah mengunjungi dvi247.com. Kami sangat menghargai kepercayaan Anda dan berkomitmen untuk melindungi informasi pribadi Anda. Kebijakan Privasi ini dirancang untuk memberikan pemahaman yang jelas tentang bagaimana kami mengumpulkan, menggunakan, mengungkap, dan menjaga informasi pribadi Anda. Dengan menggunakan layanan kami, Anda menyetujui praktik yang dijelaskan dalam Kebijakan Privasi ini.",
+            style: TextStyle(fontSize: 14),
+          ),SizedBox(height: 10,),
+          Text(
+            "Informasi yang Kami Kumpulkan",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),SizedBox(height: 5,),
+          Text(
+            "Kami dapat mengumpulkan informasi pribadi yang Anda berikan secara langsung kepada kami, seperti nama, alamat email, nomor telepon, dan informasi lainnya saat Anda menggunakan layanan kami.",
+            style: TextStyle(fontSize: 14),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Bagaimana Kami Menggunakan Informasi Anda',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 5,),
+          Text(
+            "Informasi pribadi yang kami kumpulkan dapat digunakan untuk:",
+            style: TextStyle(fontSize: 14),
+          ),
+          SizedBox(height: 5,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: List.generate(controller.Listprivacy.length, (index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          flex: 5,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 7,
+                              ),
+                              CircleAvatar(
+                                radius: 5,
+                                backgroundColor:
+                                ColorsApp.colorNeutralFgPrimary,
+                              ),
+                            ],
+                          )),
+                      SizedBox(width: 5,),
+                      Expanded(
+                        flex: 95,
+                        child: TextApp.label(
+                            text: controller.Listprivacy[index],
+                            size: 14.0,
+                            color: ColorsApp.colorNeutralFgPrimary,
+                            align: TextAlign.justify),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  )
+                ],
+              );
+            }),
+          ),
+          SizedBox(height: 10,),
+        ],
+      ),
+    );
+  }else if (id == "refund") {
     return Container(
       padding: EdgeInsets.all(16),
       color: Colors.blue[100],
@@ -589,7 +683,7 @@ Widget buildContentForId(String id) {
             style: TextStyle(fontSize: 14),
           ),
           Text(
-            "Anda dapat mengajukan permintaan untuk menghapus akun Digital Voucher Indonesia Anda dengan cara mengirimkan email permintaan penghapusan akun Digital Voucher Indonesia Anda ke care@dvi247.com menggunakan email yang terdaftar di www.Digital Voucher Indonesia.com.",
+            "Anda dapat mengajukan permintaan untuk menghapus akun Digital Voucher Indonesia Anda dengan cara mengirimkan email permintaan penghapusan akun Digital Voucher Indonesia Anda ke care@dvi247.com menggunakan email yang terdaftar di www.dvi247.com.",
             style: TextStyle(fontSize: 14),
           ),
           SizedBox(height: 16),
@@ -616,7 +710,7 @@ Widget buildContentForId(String id) {
             style: TextStyle(fontSize: 14),
           ),
           Text(
-            "Caranya sangat mudah. Anda bisa registrasi akun melalui situs Digital Voucher Indonesia via desktop atau https://www.Digital Voucher Indonesia.com/ atau melalui aplikasi Digital Voucher Indonesia yang bisa didownload secara gratis di Google Play Store atau App Store.",
+            "Caranya sangat mudah. Anda bisa registrasi akun melalui situs Digital Voucher Indonesia via desktop atau https://www.dvi247.com",
             style: TextStyle(fontSize: 14),
           ),
           Text(

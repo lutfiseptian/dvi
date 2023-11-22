@@ -50,6 +50,11 @@ class VoucherController extends GetxController {
       "id": "produk_biller"
     },
     {
+      "name": "Privacy Policy",
+      "is_active": false,
+      "id": "privacy_policy"
+    },
+    {
       "name": "Hubungi Kami",
       "is_active": false,
       "id": "hubungi_kami"
@@ -127,7 +132,13 @@ class VoucherController extends GetxController {
   var List = [
     'Inovatif: Kami selalu berusaha untuk menciptakan solusi kreatif dan efektif untuk memenuhi kebutuhan pelanggan dan mitra kami.',
     'Terpercaya: Kami selalu menjaga integritas dan profesionalisme dalam setiap transaksi dan interaksi yang kami lakukan.',
-    'Peduli: Kami selalu berempati dan menghargai pelanggan dan mitra kami sebagai bagian dari keluarga DMT',
+    'Peduli: Kami selalu berempati dan menghargai pelanggan dan mitra kami sebagai bagian dari keluarga DVI',
     'Berkembang: Kami selalu belajar dan meningkatkan kualitas diri dan layanan kami agar dapat memberikan nilai tambah bagi semua pihak.'
+  ].obs;
+  var Listprivacy = [
+    'Menyediakan dan memelihara layanan kami.',
+    'Menginformasikan Anda tentang perubahan layanan dan pembaruan.',
+    'Menanggapi pertanyaan atau permintaan dukungan pelanggan.',
+    'Menyediakan informasi terkait produk atau layanan yang mungkin menarik bagi Anda, berdasarkan preferensi yang Anda bagikan.'
   ].obs;
 }

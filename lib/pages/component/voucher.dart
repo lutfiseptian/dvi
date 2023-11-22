@@ -31,6 +31,7 @@ class _VouccherState extends State<Voucher> {
     super.initState();
     productController.fetchPulsa();
     productController.fetchGames();
+    ProductController().details.clear();
   }
 
   @override
@@ -537,7 +538,7 @@ class _VouccherState extends State<Voucher> {
                       height: 4,
                     ),
                     TextApp.label(
-                        text: "Hanya ada di Biller5",
+                        text: "Hanya ada di DVI247",
                         weigh: FontWeight.w300,
                         color: Colors.white,
                         size: 14.0),

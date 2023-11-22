@@ -9,8 +9,6 @@ import 'package:digital_voucher_indonesia/service/app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:digital_voucher_indonesia/model/product.dart';
-import 'package:digital_voucher_indonesia/model/pulsa.dart';
-import 'package:digital_voucher_indonesia/model/voucher.dart';
 import 'package:digital_voucher_indonesia/model/va.dart';
 import 'package:digital_voucher_indonesia/model/transaction.dart';
 
@@ -41,7 +39,7 @@ class ProductController extends GetxController {
   var destUp = TextEditingController();
 
   Future<void> refreshData() async {
-    await fetchProductPopuler();
+    // await fetchProductPopuler();
     await fetchBestVoucher();
     await fetchPulsa();
     await fetchGames();
@@ -74,7 +72,6 @@ class ProductController extends GetxController {
       var res = jsonDecode(response.body);
       if (response.statusCode == 200) {
         bestVouccher.value = ProductModel.fromJsonToList(res['data']);
-
         isLoadingBestVoucher.value = false;
         return;
       }
@@ -112,6 +109,7 @@ class ProductController extends GetxController {
       if (response.statusCode == 200) {
         games.value = ProductModel.fromJsonToList(res['data']);
         isLoadingGames.value = false;
+        print("Games: ${games.first}");
         return;
       }
       games.value = [];
@@ -268,15 +266,12 @@ class ProductController extends GetxController {
       } else {
         url = "/product/list/games/detail?product_code=${productCode}";
       }
-
       isLoadingDetail.value = true; // Set loading to true.
-
       var response = await ApiRequest(url: url).get();
       var res = jsonDecode(response.body);
       if (response.statusCode == 200) {
         details.value = ProductModel.fromJsonToList(res['data']);
       }
-
       // Remove isLoadingDetails here since you want to keep loading while processing the response.
     } catch (e) {
       AlertApp.showToast(e.toString());
@@ -287,6 +282,8 @@ class ProductController extends GetxController {
 
   void setProduct() {
     //AppData.products = [];
+    // cartProduct.clear();
+    // cartProduct.addAll(AppData.products!);
     Timer(Duration(seconds: 3), () {
       cartProduct.clear();
       cartProduct.addAll(AppData.products!);

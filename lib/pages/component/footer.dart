@@ -33,29 +33,19 @@ class Footer extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       width: MediaQuery.of(context).size.width,
       color: Colors.blue[100],
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   'Bantuan',
-                  //   style: TextStyle(fontWeight: FontWeight.bold),
-                  // ),
-                  // const SizedBox(height: 8),
-                  // _buildFooterItem(
-                  //   'Ketentuan Umum',
-                  //   'https://digitalvoucherindo.id/ketentuan-umum/',
-                  // ),
-                  // const SizedBox(height: 2),
-                  // _buildFooterItem(
-                  //   'Registrasi Akun',
-                  //   'https://digitalvoucherindo.id/registrasi-akun/',
-                  // ),
+                  Text(
+                    '© Digital Voucher Indonesia 2022',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
               Column(
@@ -89,7 +79,7 @@ class Footer extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30),
         ],
       ),
     );

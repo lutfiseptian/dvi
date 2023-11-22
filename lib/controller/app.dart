@@ -39,7 +39,7 @@ class AppController extends GetxController {
       'is_main_menu': true
     },
     {
-      "name": "Kententuan Umum",
+      "name": "Ketentuan Umum",
       "is_active": false,
       'page': UmumPage(),
       'icon': Icons.info_outline,
@@ -58,7 +58,7 @@ class AppController extends GetxController {
       'page': Register(),
       'icon': Icons.inbox,
       'is_main_menu': false
-    }
+    },
   ].obs;
 
   void setActiveNav() {

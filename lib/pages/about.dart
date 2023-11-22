@@ -1,9 +1,6 @@
-import 'package:digital_voucher_indonesia/assets/colors.dart';
-import 'package:digital_voucher_indonesia/pages/component/about.dart';
 import 'package:digital_voucher_indonesia/pages/component/about.dart';
 import 'package:digital_voucher_indonesia/pages/component/footer.dart';
 import 'package:digital_voucher_indonesia/pages/component/header.dart';
-import 'package:digital_voucher_indonesia/pages/component/account.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_voucher_indonesia/pages/component/drawer.dart';
 

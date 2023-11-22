@@ -1,16 +1,11 @@
 import 'package:digital_voucher_indonesia/assets/colors.dart';
 import 'package:digital_voucher_indonesia/controller/voucher.dart';
 import 'package:digital_voucher_indonesia/pages/widget/text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:digital_voucher_indonesia/controller/dashboard.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
-
 import '../../assets/images.dart';
 import 'footer.dart';
-// import 'package:iconsax/iconsax.dart';
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -84,6 +79,9 @@ class _VouccherState extends State<About> {
                       color: ColorsApp.colorNeutralFgPrimary,
                       align: TextAlign.center),
                   Image.asset(ImagesApp.image_tentang),
+                  SizedBox(
+                    height: 20,
+                  ),
                   TextApp.label(
                       text:
                       '''DMT didirikan pada tahun 2023 oleh sekelompok orang yang memiliki visi untuk membuat hidup lebih mudah dan menyenangkan dengan memberikan akses ke berbagai produk dan layanan dengan harga terjangkau. Kami bekerja sama dengan para mitra terpercaya yang menawarkan kualitas terbaik dan pelayanan prima.

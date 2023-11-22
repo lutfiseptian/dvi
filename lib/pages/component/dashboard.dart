@@ -4,9 +4,7 @@ import 'package:digital_voucher_indonesia/controller/app.dart';
 import 'package:digital_voucher_indonesia/pages/component/detail.dart';
 import 'package:digital_voucher_indonesia/pages/template/mobile.dart';
 import 'package:digital_voucher_indonesia/pages/widget/text.dart';
-import 'package:digital_voucher_indonesia/service/app_data.dart';
 import 'package:digital_voucher_indonesia/service/helper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:digital_voucher_indonesia/controller/dashboard.dart';
@@ -38,7 +36,8 @@ class _DashboardState extends State<Dashboard> {
 
   List images = [
     "assets/images/banner.png",
-    "assets/images/banner1.jpg",
+    "assets/images/freefire_banner.jpg",
+    "assets/images/pubg_banner.jpg",
   ];
 
   @override
@@ -99,42 +98,6 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-                // Row(
-                //   children: List.generate(controller.banner.length, (index) {
-                //     var data = controller.banner[index];
-                //     return Container(
-                //       child: Stack(
-                //         children: [
-                //           Image.asset(
-                //             "assets/images/banner.png",
-                //             fit: BoxFit.fill,
-                //           ),
-                //           const Padding(
-                //             padding: EdgeInsets.only(left: 16, right: 16),
-                //             child: Align(
-                //               alignment: Alignment.center,
-                //               child: Row(
-                //                 crossAxisAlignment: CrossAxisAlignment.center,
-                //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //                 children: [
-                //                   Icon(
-                //                     Icons.arrow_back_ios,
-                //                     color: Colors.white,
-                //                   ),
-                //                   Icon(
-                //                     Icons.arrow_forward_ios,
-                //                     color: Colors.white,
-                //                   )
-                //                 ],
-                //               ),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     );
-                //   }),
-                // ),
-
                 //voucher game
                 Container(
                   color: ColorsApp.blue,
@@ -238,12 +201,16 @@ class _DashboardState extends State<Dashboard> {
                                                 appController
                                                     .setInActiveNav();
                                                 print("tes");
-                                                Get.to(MobileTemplate(
-                                                  page: DetailPage(
-                                                    product: data,
-                                                    type: "voucher",
-                                                  ),
-                                                ));
+                                                Navigator.push(
+                                                  Get.context!,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => MobileTemplate(
+                                                        page: DetailPage(
+                                                            product: data,
+                                                            type: "voucher"
+                                                        ),
+                                                      )),
+                                                );
                                               },
                                               child: Container(
                                                 width: widthApp,
@@ -403,6 +370,215 @@ class _DashboardState extends State<Dashboard> {
                 SizedBox(
                   height: 20,
                 ),
+                // Container(
+                //   padding: EdgeInsets.only(
+                //     left: width * 0.03,
+                //     right: width * 0.03,
+                //   ),
+                //   child: Row(
+                //     children: [
+                //       Expanded(
+                //         flex: 5,
+                //         child: Icon(
+                //           Icons.arrow_back_ios,
+                //           color: ColorsApp.grey1,
+                //         ),
+                //       ),
+                //       Expanded(
+                //         flex: 90,
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             SizedBox(
+                //               height: 20,
+                //             ),
+                //             TextApp.label(
+                //                 text: "Game Populer",
+                //                 weigh: FontWeight.bold,
+                //                 size: 24.0),
+                //             SizedBox(
+                //               height: 20,
+                //             ),
+                //             Row(
+                //               children: [
+                //                 Expanded(
+                //                   flex: 100,
+                //                   child: SingleChildScrollView(
+                //                       scrollDirection: Axis.horizontal,
+                //                       child: Obx(
+                //                             () => productCcontroller
+                //                             .isLoadingBestVoucher
+                //                             .value ==
+                //                             true
+                //                             ? Column(
+                //                           mainAxisAlignment:
+                //                           MainAxisAlignment.center,
+                //                           crossAxisAlignment:
+                //                           CrossAxisAlignment.center,
+                //                           children: [
+                //                             Container(
+                //                               child: Center(
+                //                                 child:
+                //                                 CircularProgressIndicator(
+                //                                   color:
+                //                                   ColorsApp.baseColor,
+                //                                 ),
+                //                               ),
+                //                             ),
+                //                           ],
+                //                         )
+                //                             : Row(
+                //                           mainAxisAlignment:
+                //                           MainAxisAlignment
+                //                               .spaceBetween,
+                //                           children: List.generate(
+                //                               productCcontroller
+                //                                   .bestVouccher
+                //                                   .length, (index) {
+                //                             var data = productCcontroller
+                //                                 .bestVouccher[index];
+                //                             return InkWell(
+                //                               onTap: () {
+                //                                 appController
+                //                                     .setInActiveNav();
+                //                                 print("tes");
+                //                                 Navigator.push(
+                //                                   Get.context!,
+                //                                   MaterialPageRoute(
+                //                                       builder: (context) => MobileTemplate(
+                //                                         page: DetailPage(
+                //                                             product: data,
+                //                                             type: "voucher"
+                //                                         ),
+                //                                       )),
+                //                                 );
+                //                               },
+                //                               child: Container(
+                //                                 width: widthApp,
+                //                                 padding: EdgeInsets.only(
+                //                                     right: 8, left: 8),
+                //                                 child: Column(
+                //                                   crossAxisAlignment:
+                //                                   CrossAxisAlignment
+                //                                       .start,
+                //                                   mainAxisAlignment:
+                //                                   MainAxisAlignment
+                //                                       .start,
+                //                                   children: [
+                //                                     ClipRRect(
+                //                                       borderRadius:
+                //                                       BorderRadius
+                //                                           .circular(
+                //                                           12),
+                //                                       // child:
+                //                                       //     Image.network(
+                //                                       //   data.images,
+                //                                       // )
+                //                                       child:
+                //                                       Image.network(
+                //                                         data.images, // Replace with your image URL
+                //                                         loadingBuilder:
+                //                                             (BuildContext
+                //                                         context,
+                //                                             Widget
+                //                                             child,
+                //                                             ImageChunkEvent?
+                //                                             loadingProgress) {
+                //                                           if (loadingProgress ==
+                //                                               null) {
+                //                                             return child;
+                //                                           }
+                //                                           return CircularProgressIndicator(
+                //                                             value: loadingProgress
+                //                                                 .expectedTotalBytes !=
+                //                                                 null
+                //                                                 ? loadingProgress
+                //                                                 .cumulativeBytesLoaded /
+                //                                                 loadingProgress
+                //                                                     .expectedTotalBytes!
+                //                                                 : null,
+                //                                           );
+                //                                         },
+                //                                         errorBuilder:
+                //                                             (BuildContext
+                //                                         context,
+                //                                             Object
+                //                                             error,
+                //                                             StackTrace?
+                //                                             stackTrace) {
+                //                                           return Text(
+                //                                               'Error loading image');
+                //                                         },
+                //                                       ),
+                //                                     ),
+                //                                     SizedBox(
+                //                                       height: 8,
+                //                                     ),
+                //                                     TextApp.label(
+                //                                         text: data.name
+                //                                             .toString()),
+                //                                     SizedBox(
+                //                                       height: 8,
+                //                                     ),
+                //                                     SizedBox(
+                //                                       height: 16,
+                //                                     ),
+                //                                     InkWell(
+                //                                       onTap: () {
+                //                                         appController
+                //                                             .setInActiveNav();
+                //                                         Get.to(
+                //                                             MobileTemplate(
+                //                                               page:
+                //                                               DetailPage(
+                //                                                 type:
+                //                                                 "voucher",
+                //                                                 product: data,
+                //                                               ),
+                //                                             ));
+                //                                       },
+                //                                       child: Container(
+                //                                         padding:
+                //                                         EdgeInsets
+                //                                             .all(10),
+                //                                         decoration: BoxDecoration(
+                //                                             color:
+                //                                             ColorsApp
+                //                                                 .grey,
+                //                                             borderRadius:
+                //                                             BorderRadius
+                //                                                 .circular(
+                //                                                 10)),
+                //                                         child: TextApp.label(
+                //                                             text:
+                //                                             "Top Up",
+                //                                             color: ColorsApp
+                //                                                 .blackGrey),
+                //                                       ),
+                //                                     )
+                //                                   ],
+                //                                 ),
+                //                               ),
+                //                             );
+                //                           }),
+                //                         ),
+                //                       )),
+                //                 ),
+                //               ],
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       Expanded(
+                //         flex: 5,
+                //         child: Icon(
+                //           Icons.arrow_forward_ios,
+                //           color: ColorsApp.grey1,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Row(
                   children: [
                     Expanded(flex: 5, child: Container()),
@@ -427,31 +603,6 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 Expanded(
                                     flex: 100,
-                                    // child: GridView.builder(
-                                    //   physics:
-                                    //       AlwaysScrollableScrollPhysics(), // or BouncingScrollPhysics()
-                                    //   gridDelegate:
-                                    //       SliverGridDelegateWithFixedCrossAxisCount(
-                                    //     crossAxisCount:
-                                    //         2, // Number of items in each row
-                                    //     crossAxisSpacing: 8.0,
-                                    //     mainAxisSpacing: 8.0,
-                                    //   ),
-                                    //   itemCount: items.length,
-                                    //   itemBuilder: (context, index) {
-                                    //     return GridTile(
-                                    //       child: Container(
-                                    //         color: Colors.blue,
-                                    //         child: Center(
-                                    //           child: Text(
-                                    //             items[index],
-                                    //             style: TextStyle(color: Colors.white),
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     );
-                                    //   },
-                                    // )
                                     child: Obx(
                                           () =>
                                       productCcontroller
@@ -486,12 +637,6 @@ class _DashboardState extends State<Dashboard> {
                                                 onTap: () {
                                                   appController
                                                       .setInActiveNav();
-                                                  Get.to(MobileTemplate(
-                                                    page: DetailPage(
-                                                      product: data,
-                                                      type: "populer",
-                                                    ),
-                                                  ));
                                                 },
                                                 child: Padding(
                                                   padding:
@@ -502,13 +647,16 @@ class _DashboardState extends State<Dashboard> {
                                                       appController
                                                           .setInActiveNav();
                                                       print("tes");
-                                                      Get.to(
-                                                          MobileTemplate(
-                                                            page: DetailPage(
-                                                              product: data,
-                                                              type: "populer",
-                                                            ),
-                                                          ));
+                                                      Navigator.push(
+                                                        Get.context!,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => MobileTemplate(
+                                                              page: DetailPage(
+                                                                  product: data,
+                                                                  type: "populer"
+                                                              ),
+                                                            )),
+                                                      );
                                                     },
                                                     child: Container(
                                                       width: MediaQuery.of(
@@ -543,14 +691,14 @@ class _DashboardState extends State<Dashboard> {
                                                                 width:
                                                                 widthApp,
                                                               )),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             height: 8,
                                                           ),
                                                           TextApp.label(
                                                               text: data
                                                                   .name
                                                                   .toString()),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             height: 8,
                                                           ),
                                                           Row(
@@ -593,13 +741,6 @@ class _DashboardState extends State<Dashboard> {
                                       ),
                                     )
                                 ),
-                                // Expanded(
-                                //   flex: 5,
-                                //   child: Icon(
-                                //     Icons.arrow_forward_ios,
-                                //     color: ColorsApp.grey1,
-                                //   ),
-                                // ),
                               ],
                             ),
                           ],
@@ -622,10 +763,6 @@ class _DashboardState extends State<Dashboard> {
   }
 
   double calculateItemHeight(BoxConstraints constraints) {
-    // Use the available constraints to calculate the height of each item
-    // You can implement your own logic here to adjust the height based on the content
-    // For example, you can measure the text height and adjust accordingly
-    // In this example, we simply return a fixed height of 100 for all items.
     return 100.0;
   }
 }
