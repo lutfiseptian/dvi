@@ -812,8 +812,8 @@ void showLoadingDialog() {
               children: [
                 Text("Mohon Tunggu", style: TextStyle(fontSize: 18)),
                 SizedBox(height: 10),
-                Lottie.asset(
-                  'new_loading.json', // Ganti dengan path file Lottie Anda
+                Image.asset(
+                  'assets/images/loading.png', // Ganti dengan path file gambar Anda
                   width: 200,
                   height: 200,
                 ),
