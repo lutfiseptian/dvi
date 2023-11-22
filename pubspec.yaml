@@ -25,6 +25,7 @@ dependencies:
   flutter_cors: ^1.5.0
   flutter_launcher_icons: ^0.13.1
   barcode_widgets: ^2.0.0
+  lottie: ^2.0.0
   qr_flutter:
     git:
       url: https://github.com/theyakka/qr.flutter.git

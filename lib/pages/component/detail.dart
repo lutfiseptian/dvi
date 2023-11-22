@@ -34,6 +34,7 @@ class _DetailPageState extends State<DetailPage> {
   var voucherController = Get.put(VoucherController());
   var productController = Get.put(ProductController());
   var appControllr = Get.put(AppController());
+  var isLoadingProductPopuler = true.obs;
 
   @override
   void initState() {
@@ -45,6 +46,9 @@ class _DetailPageState extends State<DetailPage> {
     productController.fetchDetail(
         productCode: widget.product.productCode.toString(), type: widget.type);
   }
+
+
+
 
   void dispose() {
     widget.type == null;

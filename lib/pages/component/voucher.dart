@@ -11,20 +11,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:lottie/lottie.dart';
 
 class Voucher extends StatefulWidget {
   const Voucher({super.key});
 
   @override
   State<Voucher> createState() => _VouccherState();
+
 }
 
 class _VouccherState extends State<Voucher> {
   var controller = Get.put(VoucherController());
-
   var productController = Get.put(ProductController());
-
   var appController = Get.put(AppController());
+  var isLoadingProductPopuler = true.obs;
+
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _VouccherState extends State<Voucher> {
     productController.fetchGames();
     ProductController().details.clear();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -254,122 +257,86 @@ class _VouccherState extends State<Voucher> {
                                       var data =
                                       productController.pulsa[index];
                                       return InkWell(
-                                        onTap: () {
+                                        onTap: () async {
                                           appController.setInActiveNav();
-                                          // Get.to(MobileTemplate(
-                                          //   page: DetailPage(
-                                          //     product: data,
-                                          //     type: "pulsa",
-                                          //   ),
-                                          // ));
+                                          // Menampilkan dialog loading sebelum memulai navigasi
+                                          showLoadingDialog();
+                                          await Future.delayed(Duration(seconds: 2));
+                                          // Menutup dialog loading sebelum navigasi
+                                          hideLoadingDialog();
                                           Navigator.push(
                                             Get.context!,
                                             MaterialPageRoute(
-                                                builder: (context) => MobileTemplate(
-                                                  page: DetailPage(
-                                                      product: data,
-                                                      type: "pulsa"
-                                                  ),
-                                                )),
+                                              builder: (context) => MobileTemplate(
+                                                page: DetailPage(
+                                                  product: data,
+                                                  type: "pulsa",
+                                                ),
+                                              ),
+                                            ),
                                           );
                                         },
                                         child: Padding(
-                                          padding:
-                                          EdgeInsets.only(bottom: 16),
+                                          padding: EdgeInsets.only(bottom: 16),
                                           child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width /
+                                            width: MediaQuery.of(context).size.width /
                                                 (width <= 515
                                                     ? 2
-                                                    : width >= 515 &&
-                                                    width < 1012
+                                                    : width >= 515 && width < 1012
                                                     ? 3
-                                                    : width >= 1012 &&
-                                                    width <=
-                                                        1040
+                                                    : width >= 1012 && width <= 1040
                                                     ? 4
                                                     : 5) -
                                                 40,
                                             child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 ClipRRect(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      12),
-                                                  // child: Image.network(
-                                                  //     data.images
-                                                  //     )
+                                                  borderRadius: BorderRadius.circular(12),
                                                   child: Image.network(
-                                                    data.images, // Replace with your image URL
+                                                    data.images, // Ganti dengan URL gambar Anda
                                                     fit: BoxFit.fill,
-                                                    loadingBuilder: (BuildContext
-                                                    context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                        loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) {
+                                                    loadingBuilder: (BuildContext context, Widget child,
+                                                        ImageChunkEvent? loadingProgress) {
+                                                      if (loadingProgress == null) {
                                                         return child;
                                                       }
                                                       return CircularProgressIndicator(
-                                                        value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                            null
-                                                            ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
+                                                        value: loadingProgress.expectedTotalBytes != null
+                                                            ? loadingProgress.cumulativeBytesLoaded /
+                                                            loadingProgress.expectedTotalBytes!
                                                             : null,
                                                       );
                                                     },
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                        Object error,
-                                                        StackTrace?
-                                                        stackTrace) {
-                                                      return Text(
-                                                          'Error loading image');
+                                                    errorBuilder: (BuildContext context, Object error,
+                                                        StackTrace? stackTrace) {
+                                                      return Text('Error loading image');
                                                     },
-                                                    // child: Image.network(
-                                                    //   widget.product.images,
-                                                    //   fit: BoxFit.fill,
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 8,
-                                                ),
-                                                TextApp.label(
-                                                    text:
-                                                    data.name.toString()),
-                                                SizedBox(
-                                                  height: 8,
-                                                ),
-                                                SizedBox(
-                                                  height: 16.0,
-                                                ),
+                                                SizedBox(height: 8),
+                                                TextApp.label(text: data.name.toString()),
+                                                SizedBox(height: 8),
+                                                SizedBox(height: 16.0),
                                                 Container(
                                                   padding: EdgeInsets.all(10),
                                                   decoration: BoxDecoration(
-                                                      color: ColorsApp.grey,
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(10)),
+                                                    color: ColorsApp.grey,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
                                                   child: TextApp.label(
-                                                      text: "Top Up",
-                                                      color: ColorsApp
-                                                          .blackGrey),
+                                                    text: "Top Up",
+                                                    color: ColorsApp.blackGrey,
+                                                  ),
                                                 )
                                               ],
                                             ),
                                           ),
                                         ),
                                       );
-                                    }),
+
+                                        }),
                               )
                                   : InkWell(
                                 child: Wrap(
@@ -385,114 +352,193 @@ class _VouccherState extends State<Voucher> {
                                           (index) {
                                         var data =
                                         productController.games[index];
+                                        // return InkWell(
+                                        //   onTap: () {
+                                        //     appController.setInActiveNav();
+                                        //     Navigator.push(
+                                        //       Get.context!,
+                                        //       MaterialPageRoute(
+                                        //           builder: (context) => MobileTemplate(
+                                        //             page: DetailPage(
+                                        //               product: data,
+                                        //               type: "game",
+                                        //             ),
+                                        //           )),
+                                        //     );
+                                        //   },
+                                        //   child: Padding(
+                                        //     padding:
+                                        //     EdgeInsets.only(bottom: 16),
+                                        //     child: Container(
+                                        //       width: MediaQuery.of(context)
+                                        //           .size
+                                        //           .width /
+                                        //           (width <= 515
+                                        //               ? 2
+                                        //               : width >= 515 &&
+                                        //               width < 1012
+                                        //               ? 3
+                                        //               : width >= 1012 &&
+                                        //               width <=
+                                        //                   1040
+                                        //               ? 4
+                                        //               : 5) -
+                                        //           40,
+                                        //       child: Column(
+                                        //         crossAxisAlignment:
+                                        //         CrossAxisAlignment.start,
+                                        //         mainAxisAlignment:
+                                        //         MainAxisAlignment.start,
+                                        //         children: [
+                                        //           ClipRRect(
+                                        //             borderRadius:
+                                        //             BorderRadius.circular(
+                                        //                 12),
+                                        //             child: Image.network(
+                                        //               data.images, // Replace with your image URL
+                                        //               fit: BoxFit.fill,
+                                        //               loadingBuilder:
+                                        //                   (BuildContext
+                                        //               context,
+                                        //                   Widget child,
+                                        //                   ImageChunkEvent?
+                                        //                   loadingProgress) {
+                                        //                 if (loadingProgress ==
+                                        //                     null) {
+                                        //                   return child;
+                                        //                 }
+                                        //                 return CircularProgressIndicator(
+                                        //                   value: loadingProgress
+                                        //                       .expectedTotalBytes !=
+                                        //                       null
+                                        //                       ? loadingProgress
+                                        //                       .cumulativeBytesLoaded /
+                                        //                       loadingProgress
+                                        //                           .expectedTotalBytes!
+                                        //                       : null,
+                                        //                 );
+                                        //               },
+                                        //               errorBuilder:
+                                        //                   (BuildContext
+                                        //               context,
+                                        //                   Object error,
+                                        //                   StackTrace?
+                                        //                   stackTrace) {
+                                        //                 return Text(
+                                        //                     'Error loading image');
+                                        //               },
+                                        //               // child: Image.network(
+                                        //               //   widget.product.images,
+                                        //               //   fit: BoxFit.fill,
+                                        //             ),
+                                        //             // child: Image.network(
+                                        //             //     data.images)
+                                        //           ),
+                                        //           SizedBox(
+                                        //             height: 8,
+                                        //           ),
+                                        //           TextApp.label(
+                                        //               text: data.name
+                                        //                   .toString()),
+                                        //           SizedBox(
+                                        //             height: 8,
+                                        //           ),
+                                        //
+                                        //           SizedBox(
+                                        //             height: 16.0,
+                                        //           ),
+                                        //           Container(
+                                        //             padding:
+                                        //             EdgeInsets.all(10),
+                                        //             decoration: BoxDecoration(
+                                        //                 color: ColorsApp.grey,
+                                        //                 borderRadius:
+                                        //                 BorderRadius
+                                        //                     .circular(
+                                        //                     10)),
+                                        //             child: TextApp.label(
+                                        //                 text: "Top Up",
+                                        //                 color: ColorsApp
+                                        //                     .blackGrey),
+                                        //           )
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // );
                                         return InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             appController.setInActiveNav();
+                                            // Menampilkan dialog loading sebelum memulai navigasi
+                                            showLoadingDialog();
+                                            await Future.delayed(Duration(seconds: 2));
+                                            // Menutup dialog loading sebelum navigasi
+                                            hideLoadingDialog();
                                             Navigator.push(
                                               Get.context!,
                                               MaterialPageRoute(
-                                                  builder: (context) => MobileTemplate(
-                                                    page: DetailPage(
-                                                      product: data,
-                                                      type: "game",
-                                                    ),
-                                                  )),
+                                                builder: (context) => MobileTemplate(
+                                                  page: DetailPage(
+                                                    product: data,
+                                                    type: "game",
+                                                  ),
+                                                ),
+                                              ),
                                             );
                                           },
                                           child: Padding(
-                                            padding:
-                                            EdgeInsets.only(bottom: 16),
+                                            padding: EdgeInsets.only(bottom: 16),
                                             child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                              width: MediaQuery.of(context).size.width /
                                                   (width <= 515
                                                       ? 2
-                                                      : width >= 515 &&
-                                                      width < 1012
+                                                      : width >= 515 && width < 1012
                                                       ? 3
-                                                      : width >= 1012 &&
-                                                      width <=
-                                                          1040
+                                                      : width >= 1012 && width <= 1040
                                                       ? 4
                                                       : 5) -
                                                   40,
                                               child: Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   ClipRRect(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        12),
+                                                    borderRadius: BorderRadius.circular(12),
                                                     child: Image.network(
-                                                      data.images, // Replace with your image URL
+                                                      data.images, // Ganti dengan URL gambar Anda
                                                       fit: BoxFit.fill,
-                                                      loadingBuilder:
-                                                          (BuildContext
-                                                      context,
-                                                          Widget child,
-                                                          ImageChunkEvent?
-                                                          loadingProgress) {
-                                                        if (loadingProgress ==
-                                                            null) {
+                                                      loadingBuilder: (BuildContext context, Widget child,
+                                                          ImageChunkEvent? loadingProgress) {
+                                                        if (loadingProgress == null) {
                                                           return child;
                                                         }
                                                         return CircularProgressIndicator(
-                                                          value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                              null
-                                                              ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                              loadingProgress
-                                                                  .expectedTotalBytes!
+                                                          value: loadingProgress.expectedTotalBytes != null
+                                                              ? loadingProgress.cumulativeBytesLoaded /
+                                                              loadingProgress.expectedTotalBytes!
                                                               : null,
                                                         );
                                                       },
-                                                      errorBuilder:
-                                                          (BuildContext
-                                                      context,
-                                                          Object error,
-                                                          StackTrace?
-                                                          stackTrace) {
-                                                        return Text(
-                                                            'Error loading image');
+                                                      errorBuilder: (BuildContext context, Object error,
+                                                          StackTrace? stackTrace) {
+                                                        return Text('Error loading image');
                                                       },
-                                                      // child: Image.network(
-                                                      //   widget.product.images,
-                                                      //   fit: BoxFit.fill,
                                                     ),
-                                                    // child: Image.network(
-                                                    //     data.images)
                                                   ),
-                                                  SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  TextApp.label(
-                                                      text: data.name
-                                                          .toString()),
-                                                  SizedBox(
-                                                    height: 8,
-                                                  ),
-
-                                                  SizedBox(
-                                                    height: 16.0,
-                                                  ),
+                                                  SizedBox(height: 8),
+                                                  TextApp.label(text: data.name.toString()),
+                                                  SizedBox(height: 8),
+                                                  SizedBox(height: 16.0),
                                                   Container(
-                                                    padding:
-                                                    EdgeInsets.all(10),
+                                                    padding: EdgeInsets.all(10),
                                                     decoration: BoxDecoration(
-                                                        color: ColorsApp.grey,
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
+                                                      color: ColorsApp.grey,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
                                                     child: TextApp.label(
-                                                        text: "Top Up",
-                                                        color: ColorsApp
-                                                            .blackGrey),
+                                                      text: "Top Up",
+                                                      color: ColorsApp.blackGrey,
+                                                    ),
                                                   )
                                                 ],
                                               ),
@@ -553,3 +599,44 @@ class _VouccherState extends State<Voucher> {
     );
   }
 }
+void showLoadingDialog() {
+  final overlayController = Get.overlayContext;
+  if (overlayController != null) {
+    // Menutup overlay saat ini (jika ada)
+    Get.back();
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        content: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Mohon Tunggu", style: TextStyle(fontSize: 18)),
+                SizedBox(height: 10),
+                Lottie.asset(
+                  'new_loading.json', // Ganti dengan path file Lottie Anda
+                  width: 200,
+                  height: 200,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+      useSafeArea: false, // Menggunakan navigator root agar tidak mempengaruhi navigasi lainnya
+    );
+  }
+}
+
+
+void hideLoadingDialog() {
+  Get.back(); // Tutup dialog loading
+}
+

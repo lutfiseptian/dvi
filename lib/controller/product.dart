@@ -280,6 +280,8 @@ class ProductController extends GetxController {
     }
   }
 
+
+
   void setProduct() {
     //AppData.products = [];
     // cartProduct.clear();

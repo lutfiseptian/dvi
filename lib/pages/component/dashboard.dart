@@ -11,6 +11,7 @@ import 'package:digital_voucher_indonesia/controller/dashboard.dart';
 import 'package:get/get.dart';
 import 'package:digital_voucher_indonesia/pages/component/footer.dart';
 import 'package:digital_voucher_indonesia/controller/product.dart';
+import 'package:lottie/lottie.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -197,19 +198,23 @@ class _DashboardState extends State<Dashboard> {
                                             var data = productCcontroller
                                                 .bestVouccher[index];
                                             return InkWell(
-                                              onTap: () {
-                                                appController
-                                                    .setInActiveNav();
-                                                print("tes");
+                                              onTap: () async {
+                                                appController.setInActiveNav();
+                                                // Menampilkan dialog loading sebelum memulai navigasi
+                                                showLoadingDialog();
+                                                await Future.delayed(Duration(seconds: 2));
+                                                // Menutup dialog loading sebelum navigasi
+                                                hideLoadingDialog();
                                                 Navigator.push(
                                                   Get.context!,
                                                   MaterialPageRoute(
-                                                      builder: (context) => MobileTemplate(
-                                                        page: DetailPage(
-                                                            product: data,
-                                                            type: "voucher"
-                                                        ),
-                                                      )),
+                                                    builder: (context) => MobileTemplate(
+                                                      page: DetailPage(
+                                                        product: data,
+                                                        type: "voucher",
+                                                      ),
+                                                    ),
+                                                  ),
                                                 );
                                               },
                                               child: Container(
@@ -643,19 +648,38 @@ class _DashboardState extends State<Dashboard> {
                                                   EdgeInsets.only(
                                                       bottom: 16),
                                                   child: InkWell(
-                                                    onTap: () {
-                                                      appController
-                                                          .setInActiveNav();
-                                                      print("tes");
+                                                    // onTap: () {
+                                                    //   appController
+                                                    //       .setInActiveNav();
+                                                    //   print("tes");
+                                                    //   Navigator.push(
+                                                    //     Get.context!,
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) => MobileTemplate(
+                                                    //           page: DetailPage(
+                                                    //               product: data,
+                                                    //               type: "populer"
+                                                    //           ),
+                                                    //         )),
+                                                    //   );
+                                                    // },
+                                                    onTap: () async {
+                                                      appController.setInActiveNav();
+                                                      // Menampilkan dialog loading sebelum memulai navigasi
+                                                      showLoadingDialog();
+                                                      await Future.delayed(Duration(seconds: 2));
+                                                      // Menutup dialog loading sebelum navigasi
+                                                      hideLoadingDialog();
                                                       Navigator.push(
                                                         Get.context!,
                                                         MaterialPageRoute(
-                                                            builder: (context) => MobileTemplate(
-                                                              page: DetailPage(
-                                                                  product: data,
-                                                                  type: "populer"
-                                                              ),
-                                                            )),
+                                                          builder: (context) => MobileTemplate(
+                                                            page: DetailPage(
+                                                              product: data,
+                                                              type: "populer",
+                                                            ),
+                                                          ),
+                                                        ),
                                                       );
                                                     },
                                                     child: Container(
@@ -765,4 +789,46 @@ class _DashboardState extends State<Dashboard> {
   double calculateItemHeight(BoxConstraints constraints) {
     return 100.0;
   }
+}
+
+
+void showLoadingDialog() {
+  final overlayController = Get.overlayContext;
+  if (overlayController != null) {
+    // Menutup overlay saat ini (jika ada)
+    Get.back();
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        content: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Mohon Tunggu", style: TextStyle(fontSize: 18)),
+                SizedBox(height: 10),
+                Lottie.asset(
+                  'new_loading.json', // Ganti dengan path file Lottie Anda
+                  width: 200,
+                  height: 200,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+      useSafeArea: false, // Menggunakan navigator root agar tidak mempengaruhi navigasi lainnya
+    );
+  }
+}
+
+
+void hideLoadingDialog() {
+  Get.back(); // Tutup dialog loading
 }
