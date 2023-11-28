@@ -152,3 +152,4 @@ class AuthController {
         (Route route) => false);
   }
 }
+

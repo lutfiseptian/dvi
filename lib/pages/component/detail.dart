@@ -48,16 +48,12 @@ class _DetailPageState extends State<DetailPage> {
   }
 
 
-
-
   void dispose() {
-    widget.type == null;
-    if (widget.type == null) {
       productController.games.clear();
       productController.pulsa.clear();
       ProductController().details.clear();
       productController.bestVouccher.clear();
-    }
+      productController.isLoadingDetail(false);
   }
 
   @override
@@ -495,7 +491,7 @@ class _DetailPageState extends State<DetailPage> {
                                                             .ellipsis,
                                                         text: TextSpan(
                                                           text:
-                                                              "Addional Information"
+                                                              "Addtional Information"
                                                                   .toString(),
                                                           style: TextStyle(
                                                               color: ColorsApp
@@ -548,7 +544,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   ),
                                                   TextApp.label(
                                                       text: widget
-                                                          .product.addional1
+                                                          .product.addtional1
                                                           .toString(),
                                                       weigh: FontWeight.w400)
                                                 ],

@@ -17,7 +17,6 @@ class ProductModel {
   var price;
   var images;
   var popular;
-
   var productCode;
   var rangeHarga;
   var command;
@@ -25,13 +24,15 @@ class ProductModel {
   var bestPrice;
   var type;
   var description;
-  var addional1;
+  var addtional1;
   var destTopup;
   var product;
   var harga;
   var nominal;
   var notes;
   var isSelected;
+  var status;
+  var trxId;
 
   var qty;
   ProductModel(
@@ -51,14 +52,18 @@ class ProductModel {
       this.description,
       this.qty,
       this.destTopup,
-      this.addional1,
+      this.addtional1,
+      this.status,
       this.product,
       this.nominal,
       this.isSelected,
+      this.trxId,
       this.harga});
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
       id: json["id"],
+      trxId: json["trx_id"],
+      status: json["status"],
       name: json["name"],
       code: json["code"],
       notes: json["notes"],
@@ -71,7 +76,7 @@ class ProductModel {
       normalPrice: json["normal_price"],
       bestPrice: json["best_price"],
       description: json['descripsi'],
-      addional1: json['addional1'],
+      addtional1: json['addtional1'],
       type: json['type'] ?? "",
       destTopup: json['dest_topup'] ?? "",
       nominal: json['nominal'],
@@ -98,6 +103,8 @@ class ProductModel {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
+      "status": status,
+      "trx_id": trxId,
       "name": name,
       "code": code,
       "price": price,
@@ -110,7 +117,7 @@ class ProductModel {
       "normmal_price": normalPrice,
       "best_price": bestPrice,
       "description": description,
-      "addionnal1": addional1,
+      "addtional1": addtional1,
       "type": type,
       "dest_topup": destTopup,
       "nominal": nominal,

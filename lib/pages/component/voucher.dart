@@ -33,7 +33,6 @@ class _VouccherState extends State<Voucher> {
     super.initState();
     productController.fetchPulsa();
     productController.fetchGames();
-    ProductController().details.clear();
   }
 
 
@@ -336,7 +335,7 @@ class _VouccherState extends State<Voucher> {
                                         ),
                                       );
 
-                                        }),
+                                    }),
                               )
                                   : InkWell(
                                 child: Wrap(
@@ -469,10 +468,8 @@ class _VouccherState extends State<Voucher> {
                                         return InkWell(
                                           onTap: () async {
                                             appController.setInActiveNav();
-                                            // Menampilkan dialog loading sebelum memulai navigasi
                                             showLoadingDialog();
                                             await Future.delayed(Duration(seconds: 2));
-                                            // Menutup dialog loading sebelum navigasi
                                             hideLoadingDialog();
                                             Navigator.push(
                                               Get.context!,
@@ -599,11 +596,11 @@ class _VouccherState extends State<Voucher> {
     );
   }
 }
+
 void showLoadingDialog() {
   final overlayController = Get.overlayContext;
   if (overlayController != null) {
-    // Menutup overlay saat ini (jika ada)
-    Get.back();
+    // Get.back();
     Get.dialog(
       AlertDialog(
         backgroundColor: Colors.transparent,
@@ -639,4 +636,3 @@ void showLoadingDialog() {
 void hideLoadingDialog() {
   Get.back(); // Tutup dialog loading
 }
-

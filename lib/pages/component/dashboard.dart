@@ -796,7 +796,7 @@ void showLoadingDialog() {
   final overlayController = Get.overlayContext;
   if (overlayController != null) {
     // Menutup overlay saat ini (jika ada)
-    Get.back();
+    // Get.back();
     Get.dialog(
       AlertDialog(
         backgroundColor: Colors.transparent,

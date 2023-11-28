@@ -20,6 +20,7 @@ class ProductController extends GetxController {
   var games = <ProductModel>[].obs;
   var pulsa = <ProductModel>[].obs;
   var details = <ProductModel>[].obs;
+  var qris = <ProductModel>[].obs;
   var bank = <VaModel>[].obs;
   var transaction = TransactionModel().obs;
   var notes = [].obs;
@@ -30,7 +31,7 @@ class ProductController extends GetxController {
   var isLoadingPulsa = true.obs;
   var isLoadingGames = true.obs;
   var isLoadingBank = true.obs;
-  var isLoadingDetail = false.obs;
+  var isLoadingDetail = true.obs;
   var isLoadingTransaction = true.obs;
   var qty = 1.obs;
   var cartProduct = <ProductModel>[].obs;
@@ -86,8 +87,16 @@ class ProductController extends GetxController {
   Future<void> fetchPulsa() async {
     try {
       isLoadingPulsa.value = true;
+
+      // Log API URL
+      print('API URL: /product/list/pulsa');
+
       var response = await ApiRequest(url: '/product/list/pulsa').get();
       var res = jsonDecode(response.body);
+
+      // Log API result data
+      print('API Result Data: $res');
+
       if (response.statusCode == 200) {
         pulsa.value = ProductModel.fromJsonToList(res['data']);
         isLoadingPulsa.value = false;
@@ -97,9 +106,14 @@ class ProductController extends GetxController {
       isLoadingPulsa.value = true;
     } catch (e) {
       isLoadingPulsa.value = false;
+
+      // Log error
+      print('Error: $e');
+
       AlertApp.showToast(e.toString());
     }
   }
+
 
   Future<void> fetchGames() async {
     try {
@@ -258,6 +272,29 @@ class ProductController extends GetxController {
   }
 
 
+  // Future<void> fetchDetail({productCode, type}) async {
+  //   try {
+  //     var url;
+  //     if (type == "pulsa") {
+  //       url = "/product/list/pulsa/detail?product_code=${productCode}";
+  //     } else {
+  //       url = "/product/list/games/detail?product_code=${productCode}";
+  //     }
+  //     isLoadingDetail.value = true; // Set loading to true.
+  //     var response = await ApiRequest(url: url).get();
+  //     var res = jsonDecode(response.body);
+  //     if (response.statusCode == 200) {
+  //       details.value = ProductModel.fromJsonToList(res['data']);
+  //       isLoadingDetail.value = false;
+  //     }
+  //     // Remove isLoadingDetails here since you want to keep loading while processing the response.
+  //   } catch (e) {
+  //     AlertApp.showToast(e.toString());
+  //   } finally {
+  //     isLoadingDetail.value = false; // Set loading to false after processing.
+  //   }
+  // }
+
   Future<void> fetchDetail({productCode, type}) async {
     try {
       var url;
@@ -267,19 +304,61 @@ class ProductController extends GetxController {
         url = "/product/list/games/detail?product_code=${productCode}";
       }
       isLoadingDetail.value = true; // Set loading to true.
+
+      // Log API URL
+      print('API URL: $url');
+
       var response = await ApiRequest(url: url).get();
+
+      // Log API result data
       var res = jsonDecode(response.body);
+      print('API Result Data: $res');
+
       if (response.statusCode == 200) {
         details.value = ProductModel.fromJsonToList(res['data']);
+        isLoadingDetail.value = false;
       }
-      // Remove isLoadingDetails here since you want to keep loading while processing the response.
     } catch (e) {
+      // Log error
+      print('Error: $e');
       AlertApp.showToast(e.toString());
     } finally {
       isLoadingDetail.value = false; // Set loading to false after processing.
     }
   }
 
+
+  Future<void> qrisStatus(String productCode) async {
+    try {
+      // isloadingDialogQris.value = true;
+      var response = await ApiRequest(url: '/get/trx?id:$productCode').get();
+      var res = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        // Pastikan data tidak null sebelum mengaksesnya
+        if (res['data'] != null) {
+          qris.value = [ProductModel.fromJson(res['data'])];
+          // isloadingDialogQris.value = false;
+          print("trxId: ${qris[0].trxId}");
+          print("status: ${qris[0].status}");
+          print("API Request URL: ${response.request?.url}");
+          return;
+        } else {
+          print("Data tidak ditemukan atau tidak sesuai");
+        }
+      } else {
+        print("Gagal mendapatkan data QRIS. Status Code: ${response.statusCode}");
+        print("API Request URL: ${response.request?.url}");
+        // Mungkin hendak menampilkan pesan kesalahan berdasarkan respons server
+        // print(res['meta']['message']);
+      }
+
+      // isloadingDialogQris.value = false;
+    } catch (e) {
+      // isloadingDialogQris.value = false;
+      print("Error: $e");
+      AlertApp.showToast(e.toString());
+    }
+  }
 
 
   void setProduct() {
