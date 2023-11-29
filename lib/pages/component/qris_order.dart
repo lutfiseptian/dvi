@@ -155,7 +155,7 @@ class _QrisPageState extends State<QrisPage> {
                     onPressed: () async {
                       try {
                         await productController.qrisStatus(
-                            productController.transaction.value.id.toString());
+                            productController.transaction.value.vaNumber.toString());
                       } finally {
 
                         if (productController.qris.isNotEmpty) {
@@ -179,7 +179,7 @@ class _QrisPageState extends State<QrisPage> {
                             // Jika status lainnya
                             CustomDialog.showErrorDialog(
                               context,
-                              "Gagal",
+                              "Pending",
                               "Status transaksi: $status",
                             );
                           }

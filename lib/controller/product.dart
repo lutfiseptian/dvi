@@ -331,7 +331,7 @@ class ProductController extends GetxController {
   Future<void> qrisStatus(String productCode) async {
     try {
       // isloadingDialogQris.value = true;
-      var response = await ApiRequest(url: '/get/trx?id:$productCode').get();
+      var response = await ApiRequest(url: '/get/trx?id=$productCode').get();
       var res = jsonDecode(response.body);
       if (response.statusCode == 200) {
         // Pastikan data tidak null sebelum mengaksesnya
